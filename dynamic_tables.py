@@ -6,9 +6,10 @@ from all_table import GetAllTables
 
 from table_schema import datatype_mysql, uri
 
+from config import SCHEMA
 
 class DyTables(object):
-    def __init__(self, schame=None):
+    def __init__(self, schame=SCHEMA):
         self._schema = schame
         self._uri = uri + "/" + schame
         print self._uri
