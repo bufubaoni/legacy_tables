@@ -16,13 +16,16 @@ you can config file
     SCHEMA = "schema"
 
 ## use it
-if you db name is `test` and you have table `A` the colums is `id` and `content`
+if you db name is `test` and you have table `a` the colums is `id` and `content`
 you can use it blow 
 ```python
-    from data_base.dynamic_tables import DyTables
-    db = DyTables(schame=SCHEMA).get_db()
+    from dynamic_tables import DyTables
+    db = DyTables(schame="test").get_db()
 
-    rows = db(db.A.id > 0).select()
+    rows = db(db.a.id > 0).select()
+    #>>> a.id,a.content
+    #>>> 1,1
+    #>>> 2,2
 
 ```
 
