@@ -9,12 +9,12 @@ from table_schema import datatype_mysql, uri
 from config import SCHEMA
 
 class DyTables(object):
-    def __init__(self, schame=SCHEMA):
-        self._schema = schame
-        self._uri = uri + "/" + schame
+    def __init__(self, schema=SCHEMA):
+        self._schema = schema
+        self._uri = uri + "/" + schema
         print self._uri
         self._dal = DAL(self._uri)
-        self._datatapy_dict = datatype_mysql()
+        self._datatype_dict = datatype_mysql()
         self.get_tables()
 
     def get_tables(self):
@@ -23,10 +23,10 @@ class DyTables(object):
             fields = []
             for field in _tables.get(table):
                 try:
-                    fields.append(Field(field[0], self._datatapy_dict[field[1]]))
+                    fields.append(Field(field[0], self._datatype_dict[field[1]]))
                 except SyntaxError:
                     fields.append(Field("r_" + field[0],
-                                        self._datatapy_dict[field[1]],
+                                        self._datatype_dict[field[1]],
                                         rname=field[0]))
             self._dal.define_table(table.replace(" ",""), *fields, primarykey=[], migrate=False)
 
@@ -35,7 +35,8 @@ class DyTables(object):
 
 
 if __name__ == '__main__':
-    dtb = DyTables(schame='realtime_db').get_db()
-    print dtb(dtb.dic_center_lever.id > 0).select()
+    dtb = DyTables(schema='realtime_db').get_db()
+    print type(dtb.dic_center_lever.id > 0)
+    print dtb().select()
     print dtb((dtb.info_component.dtu_id == 1478567531) & (dtb.info_component.loop_number == str(int("999", 16)))
               & (dtb.info_component.component_number == str(int("999", 16)))).count()
