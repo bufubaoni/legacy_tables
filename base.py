@@ -140,4 +140,4 @@ class mysqlDatabase(DataBase):
 if __name__ == '__main__':
     dtb = sqliteDatabase("sqlite://pass/db.sqlite").get_db()
     # print dtb(dtb.django_migrations.id >= 0).select()
-    db = mysqlDatabase("mysql://username:password@addr/dbname")
+    db = mysqlDatabase("mysql://username:password@addr/dbname").get_db()
