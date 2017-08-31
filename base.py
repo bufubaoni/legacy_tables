@@ -137,6 +137,29 @@ class mysqlDatabase(DataBase):
             yield column.COLUMN_NAME, column.DATA_TYPE, column.IS_NULLABLE
 
 
+class postgresqlDatabase(DataBase):
+    def __init__(self, uri, *args, **kwargs):
+        uri_para = urlparse(uri)
+
+        self._schema = uri_para.path.replace("/", "")
+        super(postgresqlDatabase, self).__init__(uri, *args, **kwargs)
+
+    def get_table_names(self):
+        for table in self._dal.executesql(
+                        "SELECT tablename FROM pg_catalog.pg_tables where tableowner = '%s'" % self._schema):
+            yield table[0]
+
+    def get_table_columns(self, tablename):
+        for column in self._dal.executesql(
+                        "SELECT COLUMN_NAME,data_type,is_nullable FROM information_schema.columns WHERE table_schema = '%s' AND table_name='%s';" % (self._schema, tablename)):
+            yield column[0], column[1], column[2]
+
+    def get_sys_table(self):
+        pass
+
+
 if __name__ == '__main__':
-    dtb = sqliteDatabase("sqlite://pass/db.sqlite").get_db()
-    db = mysqlDatabase("mysql://username:password@addr/dbname").get_db()
+    # dtb = sqliteDatabase("sqlite://pass/db.sqlite").get_db()
+    # db = mysqlDatabase("mysql://username:password@addr/dbname").get_db()
+    dbp = postgresqlDatabase("postgres://dbuser:123456@192.168.85.130/kong").get_db()
+    print dbp
