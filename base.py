@@ -173,6 +173,6 @@ class postgresqlDatabase(DataBase):
 if __name__ == '__main__':
     # dtb = sqliteDatabase("sqlite://pass/db.sqlite").get_db()
     # db = mysqlDatabase("mysql://username:password@addr/dbname").get_db()
-    dbp = postgresqlDatabase("postgres://kong:kong@192.168.85.130/kong").get_db()
+    dbp = postgresqlDatabase("postgres://username:password@addr/dbname").get_db()
     print dbp
     print dbp(dbp.apis.id != None).select()
