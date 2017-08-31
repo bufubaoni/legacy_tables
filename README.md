@@ -1,4 +1,4 @@
-# Mysql to orm
+# legacy table for orm
 py2.7
 
 this project base pydal `requiredments`
