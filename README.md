@@ -23,7 +23,9 @@ codeblock is
 
 ```
 
-## database
-    sqlite
-    mysql
+## database supported and connection strings
+
+    sqlite-------sqlite://storage.sqlite
+    mysql--------mysql://username:password@localhost/test
+
 more about for [more](http://www.web2py.com/books/default/chapter/29/06/the-database-abstraction-layer)
