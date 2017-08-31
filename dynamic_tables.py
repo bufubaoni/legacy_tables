@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Created by ChenXin on 2017/7/18
-from pydal import DAL, Field
-from all_table import GetAllTables
 from urlparse import urlparse
 import base
 
