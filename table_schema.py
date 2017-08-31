@@ -51,3 +51,22 @@ def datatype_mysql():
         mediumtext='text',
         longtext='text',
     )
+
+
+def sqlite_table(uri="sqlite://D:/workpath/web2py_celery/web2py/applications/web2py_celery/databases/storage.sqlite"):
+    sys_tab = DAL(uri=uri)
+
+    sys_tab.define_table('sqlite_master',
+                         Field("type", ),
+                         Field("name"),
+                         Field("tbl_name"),
+                         Field("sql"),
+                         primarykey=[],
+                         migrate=False)
+    return sys_tab
+
+
+if __name__ == '__main__':
+    db = sqlite_table()
+    for row in db(db.sqlite_master.type == "table").select():
+        print row.sql

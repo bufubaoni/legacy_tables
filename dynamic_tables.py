@@ -37,6 +37,6 @@ class DyTables(object):
 if __name__ == '__main__':
     dtb = DyTables(schema='realtime_db').get_db()
     print type(dtb.dic_center_lever.id > 0)
-    print dtb().select()
+    print dtb(dtb.dic_center_lever.id > 0).select()
     print dtb((dtb.info_component.dtu_id == 1478567531) & (dtb.info_component.loop_number == str(int("999", 16)))
               & (dtb.info_component.component_number == str(int("999", 16)))).count()
