@@ -134,11 +134,10 @@ class mysqlDatabase(DataBase):
     def get_table_columns(self, table_name):
         for column in self._sys_dal((self._sys_dal.COLUMNS.TABLE_NAME == table_name) &
                                             (self._sys_dal.COLUMNS.TABLE_SCHEMA == self._schema)).select():
-            print column.COLUMN_NAME
             yield column.COLUMN_NAME, column.DATA_TYPE, column.IS_NULLABLE
 
 
 if __name__ == '__main__':
     dtb = sqliteDatabase("sqlite://pass/db.sqlite").get_db()
     # print dtb(dtb.django_migrations.id >= 0).select()
-    db = mysqlDatabase("mysql://username:password@addr/dbname").get_db()
+    db = mysqlDatabase("mysql://username:password@addr/dbname")
