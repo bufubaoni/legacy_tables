@@ -65,8 +65,36 @@ def sqlite_table(uri="sqlite://D:/workpath/web2py_celery/web2py/applications/web
                          migrate=False)
     return sys_tab
 
+# CREATE TABLE auth_user(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     first_name CHAR(128),
+#     last_name CHAR(128),
+#     email CHAR(512),
+#     password CHAR(512),
+#     registration_key CHAR(512),
+#     reset_password_key CHAR(512),
+#     registration_id CHAR(512)
+# )
+# CREATE TABLE sqlite_sequence(name,seq)
+
+def sql_para(sql=("""CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+)""")):
+    print sql.split("\n")
+
+def get_table_name():
+    pass
+
 
 if __name__ == '__main__':
     db = sqlite_table()
-    for row in db(db.sqlite_master.type == "table").select():
-        print row.sql
+    # for row in db(db.sqlite_master.type == "table").select():
+    #     print row.sql
+    print db.executesql('PRAGMA table_info(auth_user)')
