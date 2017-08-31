@@ -17,9 +17,11 @@ class DataBase(object):
             self.set_schema(table_name)
 
     def get_table_names(self):
+        "get name list or iter"
         pass
 
     def get_table_columns(self, table_name):
+        "struct is (column_name, column_type, is_null)"
         pass
 
     def set_schema(self, table_name):
@@ -36,6 +38,7 @@ class DataBase(object):
         self._dal.define_table(table_name.replace(" ", ""), *fields, primarykey=[], migrate=False)
 
     def get_sys_table(self):
+        "just a vitrul method you just implement get_table_name and get_table_columns"
         pass
 
     def get_db(self):
@@ -129,7 +132,7 @@ class mysqlDatabase(DataBase):
                                           migrate=False)
 
     def get_table_columns(self, table_name):
-        for column in self._sys_dal((self._sys_dal.COLUMNS.TABLE_NAME == table_name)&
+        for column in self._sys_dal((self._sys_dal.COLUMNS.TABLE_NAME == table_name) &
                                             (self._sys_dal.COLUMNS.TABLE_SCHEMA == self._schema)).select():
             print column.COLUMN_NAME
             yield column.COLUMN_NAME, column.DATA_TYPE, column.IS_NULLABLE
