@@ -28,6 +28,7 @@ class DataBase(object):
         fields = []
         for column in self.get_table_columns(table_name):
             try:
+                print column
                 fields.append(Field(column[0],
                                     self.datatype()[column[1].lower()]))
             except SyntaxError:
@@ -45,7 +46,7 @@ class DataBase(object):
         return self._dal
 
     def datatype(self):
-        return dict(
+        dic_datatype = dict(
             varchar='string',
             int='integer',
             integer='integer',
@@ -70,7 +71,14 @@ class DataBase(object):
             tinytext='text',
             mediumtext='text',
             longtext='text',
+            array="list",
+            uuid='string',
+            boolean="boolean",
+            json="json"
         )
+        dic_datatype.update(**{"timestamp without time zone": "time"})
+        return dic_datatype
+        # dic_datatype.update(**{"":"ss"})
 
 
 class sqliteDatabase(DataBase):
@@ -150,8 +158,12 @@ class postgresqlDatabase(DataBase):
             yield table[0]
 
     def get_table_columns(self, tablename):
+        sql = "SELECT COLUMN_NAME,data_type,is_nullable FROM information_schema.columns WHERE table_catalog = '%s' AND table_name='%s';" % (
+            self._schema, tablename)
+
+        print sql
         for column in self._dal.executesql(
-                        "SELECT COLUMN_NAME,data_type,is_nullable FROM information_schema.columns WHERE table_schema = '%s' AND table_name='%s';" % (self._schema, tablename)):
+                sql):
             yield column[0], column[1], column[2]
 
     def get_sys_table(self):
@@ -161,5 +173,6 @@ class postgresqlDatabase(DataBase):
 if __name__ == '__main__':
     # dtb = sqliteDatabase("sqlite://pass/db.sqlite").get_db()
     # db = mysqlDatabase("mysql://username:password@addr/dbname").get_db()
-    dbp = postgresqlDatabase("postgres://dbuser:123456@192.168.85.130/kong").get_db()
+    dbp = postgresqlDatabase("postgres://kong:kong@192.168.85.130/kong").get_db()
     print dbp
+    print dbp(dbp.apis.id != None).select()

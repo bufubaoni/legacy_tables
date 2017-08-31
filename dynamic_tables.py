@@ -16,7 +16,8 @@ class DyTables(object):
     def get_database(self):
         return dict(
             sqlite="sqliteDatabase",
-            mysql="mysqlDatabase"
+            mysql="mysqlDatabase",
+            postgres='postgresqlDatabase'
         )
 
     def get_db(self):
