@@ -32,3 +32,21 @@ codeblock is
     postgresql---postgres://username:password@addr/test
 
 more about for [more](http://www.web2py.com/books/default/chapter/29/06/the-database-abstraction-layer)
+
+## util add
+
+    filter_tool ---------- convert data to need
+
+```python
+    print filter_tool({"table1": {"column1": "value1", "column2": "value2"}},
+                      {"table1": ["column1"]})
+    >>>{'column1': 'value1'}
+    print filter_tool({"table1": {"column1": "value1", "column2": "value2"}},
+                      {"table1": ["column1", ("column2", "k2")]})
+    >>>{'k2': 'value2', 'column1': 'value1'}
+    print filter_tool({"table1": {"column1": "value1", "column2": "value2"}},
+                      {"table1": ["column1", {"column2": "k2"}]})
+    >>>{'k2': 'value2', 'column1': 'value1'}
+    print filter_tool({"column1": "value1", "column2": "value2"}, ["column2"])
+    >>>{'column2': 'value2'}
+```
